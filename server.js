@@ -84,18 +84,22 @@ router.route('/signup/:username/:password')
 		        console.log(data);
 		    }
 		});
-		// Users.findOne({user: req.params.username}).exec(function(err, users) {
-  //           if (err)
-  //               res.send(err);
-  //           console.log(users.password);
-  //           if (users.password == req.params.password) {
-  //           	res.send(users);
-  //           }
-  //           else {
-  //           	res.json(false);
-  //           }
-  //       });
 	});
+
+router.route('/signin/:username/:password')
+	.get(function(req, res) {
+	Users.findOne({user: req.params.username}).exec(function(err, users) {
+        if (err)
+            res.send(err);
+        console.log(users.password);
+        if (users.password == req.params.password) {
+        	res.send(users);
+        }
+        else {
+        	res.json(false);
+        }
+    });
+   });
 
 app.use('/api', router);
 
