@@ -71,9 +71,16 @@ router.route('/signup/:username/:password')
 		var newSubscribed = new Users({
 			token: randtok,
 			user: req.params.username, 
-			password: req.params.password
+			password: req.params.password,
+			bars: {
+				barGold: 2,
+				barGold_comma: 0,
+				barElixir: 4,
+				barElixir_comma: 0,
+				barDarkElixir: 3,
+				barDarkElixir_comma: 0
+			}
 		});
-		// console.log(newSubscribed);
 		newSubscribed.save(function(error, data) {
 		    if (error) {
 		        res.json(error);
@@ -106,6 +113,7 @@ router.route('/profile/:profile/:user')
 		var profile = JSON.parse(req.params.profile);
 		updateProfile = {
 			barGold: profile.barGold,
+			barGold_comma: profile.barGold_comma,
 			barElixir: profile.barElixir,
 			barDarkElixir: profile.barDarkElixir
 		};

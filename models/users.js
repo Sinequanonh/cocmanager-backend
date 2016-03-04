@@ -7,8 +7,11 @@ var UsersSchema = new Schema({
 	password: String,
 	bars: {
 		barGold: Number,
+		barGold_comma: Number,
 		barElixir: Number,
-		barDarkElixir: Number
+		barElixir_comma: Number,
+		barDarkElixir: Number,
+		barDarkElixir_comma: Number
 	}
 }, {collection: 'users'});
 
