@@ -99,7 +99,78 @@ router.route('/signin/:username/:password')
         	res.json(false);
         }
     });
-   });
+});
+
+router.route('/profile/:profile/:user')
+	.post(function(req, res) {
+		var profile = JSON.parse(req.params.profile);
+		updateProfile = {
+			barGold: profile.barGold,
+			barElixir: profile.barElixir,
+			barDarkElixir: profile.barDarkElixir
+		};
+
+		console.log(profile);
+
+
+		Users.findOne(req.params.user, function(err, user) {
+		  if (err) throw err;
+		  console.log(user);
+
+		  // change the users location
+		  user.bars = updateProfile;
+		 //  updateProfile = new Profile({
+			// 	bars: {
+			// 		barGold: 400000,
+			// 		barElixir: 20000,
+			// 		barDarkElixir: 30000
+			// 	}
+			// });
+
+		  // save the user
+		  user.save(function(err) {
+		    if (err) throw err;
+		    console.log('User successfully updated!');
+		  });
+
+		});
+
+		// delete updateProfile._id;
+
+		// Profile.update({user: req.params.user},  {$set: updateProfile}, {upsert: false}, function(err, profil) {
+		// 	res.send(profil);
+		// 	console.log(err);
+		// 	console.log(profil);
+		// });
+
+
+		// Profile.findOneAndUpdate({user:req.params.user}, {"prout": "caca"}, {upsert: true}, function (err, profile) {
+		//   res.send(profile);
+		// });
+
+
+		// Profile.findOne(req.params.user, function(err, p) {
+		// 	p.updateProfile = new Profile({
+		// 		mdr: {
+		// 			barGold: 400000,
+		// 			barElixir: 20000,
+		// 			barDarkElixir: 30000
+		// 		}
+		// 	});
+		// 	p.save(function(error, data) {
+		// 		if (error) {
+		//         	res.json(error);
+		//         	console.log(error);
+		// 	    }
+		// 	    else {
+		// 	        res.json(data);
+		// 	        console.log(data);
+		// 	    }
+		// 	});
+		// });
+	});
+
+
 
 app.use('/api', router);
 
