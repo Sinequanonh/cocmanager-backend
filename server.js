@@ -115,7 +115,9 @@ router.route('/profile/:profile/:user')
 			barGold: profile.barGold,
 			barGold_comma: profile.barGold_comma,
 			barElixir: profile.barElixir,
-			barDarkElixir: profile.barDarkElixir
+			barElixir_comma: profile.barElixir,
+			barDarkElixir: profile.barDarkElixir,
+			barDarkElixir_comma: profile.barDarkElixir
 		};
 		console.log('User in request:' + req.params.user);
 		Users.findOne({"user": req.params.user}, function(err, user) {
