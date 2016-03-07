@@ -11,7 +11,8 @@ var UsersSchema = new Schema({
 		barElixir: Number,
 		barElixir_comma: Number,
 		barDarkElixir: Number,
-		barDarkElixir_comma: Number
+		barDarkElixir_comma: Number,
+		gems: Number
 	}
 }, {collection: 'users'});
 

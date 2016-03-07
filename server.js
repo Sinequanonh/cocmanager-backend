@@ -78,7 +78,8 @@ router.route('/signup/:username/:password')
 				barElixir: 4,
 				barElixir_comma: 0,
 				barDarkElixir: 3,
-				barDarkElixir_comma: 0
+				barDarkElixir_comma: 0,
+				gems: 0
 			}
 		});
 		newSubscribed.save(function(error, data) {
@@ -117,7 +118,8 @@ router.route('/profile/:profile/:user')
 			barElixir: profile.barElixir,
 			barElixir_comma: profile.barElixir,
 			barDarkElixir: profile.barDarkElixir,
-			barDarkElixir_comma: profile.barDarkElixir
+			barDarkElixir_comma: profile.barDarkElixir,
+			gems: profile.gems
 		};
 		console.log('User in request:' + req.params.user);
 		Users.findOne({"user": req.params.user}, function(err, user) {

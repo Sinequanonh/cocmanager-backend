@@ -1,5 +1,5 @@
 # CoC manager
-Coc manager is a clan manager for Clash of Clans. You are able to setup your profile, and let your mates know a better idea bout your availabilities and a better way to manager wars and keep your clan active.
+Coc manager is a clan manager for Clash of Clans. You are able to setup your profile, and let your mates know a better idea about your availabilities and a better way to manager wars and keep your clan active.
 
 # Installation
 Install dependencies:
