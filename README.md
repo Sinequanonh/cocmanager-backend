@@ -9,6 +9,9 @@ Start server.js:
 
     node server.js
 
-I recommand using supervisor instead of node:
+I recommand using supervisor (nodejs needed).
 
-	pip install supervisor
+	supervisor server.js
+
+# Deployment:
+Just `git pull` the project.

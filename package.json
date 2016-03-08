@@ -22,6 +22,8 @@
     "clash-of-clans-api": "0.0.2",
     "express": "^4.13.4",
     "mongoose": "^4.4.5",
-    "rand-token": "^0.2.1"
+    "pm2": "^1.0.2",
+    "rand-token": "^0.2.1",
+    "supervisor": "^0.9.1"
   }
 }
