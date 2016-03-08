@@ -5,13 +5,21 @@ Coc manager is a clan manager for Clash of Clans. You are able to setup your pro
 Install dependencies:
 
     npm install
-Start server.js:
-
-    node server.js
-
-I recommand using supervisor (nodejs needed).
+Start the server:
 
 	supervisor server.js
 
 # Deployment:
+	
+	npm install
+	pm2 start server.js
+
+## If already in production
 Just `git pull` the project.
+
+
+`pm2 list`: lists all running applications
+
+`pm2 logs`: shows logs 
+
+`pm2 delete <id>`: deletes an app within its id
