@@ -7,6 +7,8 @@ var mongoose 	        = require('mongoose');
 var randtoken			= require('rand-token');
 var clashApi 			= require('clash-of-clans-api');
 var sha1 				= require('sha1');
+var sha1 				= require('sha1');
+var rateLimit 			= require('express-rate-limit');
 // Models
 var Users				= require('./models/users');
 var Clans				= require('./models/clans');
@@ -17,6 +19,14 @@ mongoose.connect('mongodb://127.0.0.1:27017/cocmanager');
 // mongoose.connect();
 app.use(bodyParser.urlencoded({ extended: true}));
 app.use(bodyParser.json());
+
+var limiter = rateLimit({
+	windowMs: 10000,
+	delayAfter: 1,
+	delayMs: 1000,
+	max: 3,
+	message: 'Too many requests, please try again later.'
+});
 
 var port = process.env.PORT || 8484;
 
@@ -239,7 +249,7 @@ router.route('/validateclan/:tag/:token')
 		});
 	});
 
-app.use('/api', router);
+app.use('/api', router, limiter);
 
 app.listen(port);
 
