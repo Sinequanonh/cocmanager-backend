@@ -15,7 +15,8 @@ Start the server:
 	pm2 start server.js
 
 ## If already in production
-Just `git pull` the project.
+	git pull
+	pm2 restart <id>
 
 
 `pm2 list`: lists all running applications

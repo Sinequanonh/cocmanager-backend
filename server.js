@@ -118,7 +118,7 @@ router.route('/searchclan/:name')
 			.withLimit(20)
 			.fetch()
 			.then(response => res.send(response))
-			.catch(err => console.log(err))
+			.catch(err => console.log(err));
 	});
 
 // Clan profile
