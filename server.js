@@ -37,6 +37,7 @@ router.get('/', function(req, res) {
 	res.json({ message: 'Home'});
 });
 
+// Check if authenticated
 router.route('/auth/:auth')
 .get(function(req, res) {
 	console.log(req.params.auth);
@@ -52,6 +53,7 @@ router.route('/auth/:auth')
     });
 });
 
+// Signup
 router.route('/signup/:username/:password')
 	.post(function(req, res) {
 		console.log("user name  : " + req.params.username);
@@ -85,6 +87,7 @@ router.route('/signup/:username/:password')
 		});
 	});
 
+// Signin
 router.route('/signin/:username/:password')
 	.get(function(req, res) {
 	Users.findOne({user: req.params.username}).exec(function(err, users) {
@@ -101,19 +104,34 @@ router.route('/signin/:username/:password')
     });
 });
 
+// Clan search
+router.route('/clansearch/:name')
+	.get(function(req, res) {
+		console.log(req.params.name);
+		// CoC API
+		let client = clashApi({
+		  	token: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6IjhiNTBlNzYwLWE4YzUtNDY1ZS04YTg4LTY4ZDljMDgzMGYzMCIsImlhdCI6MTQ1NzM5MzcyNiwic3ViIjoiZGV2ZWxvcGVyLzhhODkwMzQzLWU0ZDAtYjlmNS1mNGFjLTljN2FhYTQwNmI1ZCIsInNjb3BlcyI6WyJjbGFzaCJdLCJsaW1pdHMiOlt7InRpZXIiOiJkZXZlbG9wZXIvc2lsdmVyIiwidHlwZSI6InRocm90dGxpbmcifSx7ImNpZHJzIjpbIjQ2LjIyOS4xNTMuMTQ2IiwiNS4xOTYuNzEuOTEiLCI4OS43OC4xOTQuMTk2Il0sInR5cGUiOiJjbGllbnQifV19.WaoOOVg1Wxnnb2PYN2hLA2x1IS6MTCxT9VGl5FbpV_P7NENcC7RoB3geM8u0admc7cRTN62uxh83d5PrxB9A0Q" // Optional, can also use COC_API_TOKEN env variable
+		});
+		client
+			.clans()
+			.withName(req.params.name)
+			.withLimit(20)
+			.fetch()
+			.then(response => res.send(response))
+			.catch(err => console.log(err))
+	});
+
+// Clan profile
 router.route('/clan/:clan_tag')
 	.get(function(req, res) {
 		console.log(req.params.clan_tag);
-		let client = clashApi({
-  			token: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6IjhiNTBlNzYwLWE4YzUtNDY1ZS04YTg4LTY4ZDljMDgzMGYzMCIsImlhdCI6MTQ1NzM5MzcyNiwic3ViIjoiZGV2ZWxvcGVyLzhhODkwMzQzLWU0ZDAtYjlmNS1mNGFjLTljN2FhYTQwNmI1ZCIsInNjb3BlcyI6WyJjbGFzaCJdLCJsaW1pdHMiOlt7InRpZXIiOiJkZXZlbG9wZXIvc2lsdmVyIiwidHlwZSI6InRocm90dGxpbmcifSx7ImNpZHJzIjpbIjQ2LjIyOS4xNTMuMTQ2IiwiNS4xOTYuNzEuOTEiLCI4OS43OC4xOTQuMTk2Il0sInR5cGUiOiJjbGllbnQifV19.WaoOOVg1Wxnnb2PYN2hLA2x1IS6MTCxT9VGl5FbpV_P7NENcC7RoB3geM8u0admc7cRTN62uxh83d5PrxB9A0Q" // Optional, can also use COC_API_TOKEN env variable
-		});
-	client
-	  .clanByTag(req.params.clan_tag)
-	  .then(response => res.send(response))
-	  .catch(err => console.log(err));
+		client
+			.clanByTag(req.params.clan_tag)
+			.then(response => res.send(response))
+			.catch(err => console.log(err));
 });
 
-
+// User profile
 router.route('/profile/:profile/:user')
 	.post(function(req, res) {
 		var profile = JSON.parse(req.params.profile);
