@@ -41,12 +41,12 @@ router.get('/', function(req, res) {
 // Check if authenticated
 router.route('/auth/:auth')
 .get(function(req, res) {
-	console.log(req.params.auth);
 	Users.findOne({token: req.params.auth}).exec(function(err, users) {
         if (err)
             res.send(err);
         if (users) {
         	users.password = undefined;
+        	console.log(users.user);
         	res.json(users);
         }
         else
