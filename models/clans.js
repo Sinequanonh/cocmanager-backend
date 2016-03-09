@@ -8,7 +8,7 @@ var ClansSchema = new Schema({
 			{ name: String }
 		],
 		activated: Boolean,
-		activate_token: Number,
+		activate_token: String,
 		date_created: Date
 }, {collection: 'clans'});
 

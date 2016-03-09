@@ -163,6 +163,82 @@ router.route('/profile/:profile/:user')
 		});
 	});
 
+// Create clan
+router.route('/createclan/:clan_register/:leader')
+	.post(function(req, res) {
+		var randtok = randtoken.generate(4);
+		console.log('clan creation tag: ' + req.params.clan_register);
+		let client = clashApi({
+		  	token: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6IjhiNTBlNzYwLWE4YzUtNDY1ZS04YTg4LTY4ZDljMDgzMGYzMCIsImlhdCI6MTQ1NzM5MzcyNiwic3ViIjoiZGV2ZWxvcGVyLzhhODkwMzQzLWU0ZDAtYjlmNS1mNGFjLTljN2FhYTQwNmI1ZCIsInNjb3BlcyI6WyJjbGFzaCJdLCJsaW1pdHMiOlt7InRpZXIiOiJkZXZlbG9wZXIvc2lsdmVyIiwidHlwZSI6InRocm90dGxpbmcifSx7ImNpZHJzIjpbIjQ2LjIyOS4xNTMuMTQ2IiwiNS4xOTYuNzEuOTEiLCI4OS43OC4xOTQuMTk2Il0sInR5cGUiOiJjbGllbnQifV19.WaoOOVg1Wxnnb2PYN2hLA2x1IS6MTCxT9VGl5FbpV_P7NENcC7RoB3geM8u0admc7cRTN62uxh83d5PrxB9A0Q" // Optional, can also use COC_API_TOKEN env variable
+		});
+		// Checks if the clan tag does exist
+		client
+			.clanByTag(req.params.clan_register)
+			.then(function(response) {
+				console.log("Found it");
+				createClan();
+				res.send({"token": randtok});
+			})
+			.catch(function(err) {
+				console.log("Not found");
+				res.send({found: false});
+			});
+		// Initializing clan settings
+		var createClan = function () {
+			console.log("Creating clan...");
+			var clanModel = new Clans({
+				tag: req.params.clan_register,
+				leader: req.params.leader,
+				members: [
+					{ name: String }
+				],
+				activated: false,
+				activate_token: randtok,
+				date_created: new Date()
+			});
+			// Save model into the database
+			clanModel.save(function(error, data) {
+			    if (error) {
+			        console.log(error);
+			    }
+			    else {
+			        console.log(data);
+			        console.log("Clan was successfully created!");
+			    }
+			});
+		}
+	});
+
+// Validates clan
+router.route('/validateclan/:tag/:token')
+	.post(function(req, res) {
+		console.log("Validating clan...");
+		Clans.findOne({"tag": req.params.tag}, function(err, clan) {
+		let client = clashApi({
+	  		token: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6IjhiNTBlNzYwLWE4YzUtNDY1ZS04YTg4LTY4ZDljMDgzMGYzMCIsImlhdCI6MTQ1NzM5MzcyNiwic3ViIjoiZGV2ZWxvcGVyLzhhODkwMzQzLWU0ZDAtYjlmNS1mNGFjLTljN2FhYTQwNmI1ZCIsInNjb3BlcyI6WyJjbGFzaCJdLCJsaW1pdHMiOlt7InRpZXIiOiJkZXZlbG9wZXIvc2lsdmVyIiwidHlwZSI6InRocm90dGxpbmcifSx7ImNpZHJzIjpbIjQ2LjIyOS4xNTMuMTQ2IiwiNS4xOTYuNzEuOTEiLCI4OS43OC4xOTQuMTk2Il0sInR5cGUiOiJjbGllbnQifV19.WaoOOVg1Wxnnb2PYN2hLA2x1IS6MTCxT9VGl5FbpV_P7NENcC7RoB3geM8u0admc7cRTN62uxh83d5PrxB9A0Q" // Optional, can also use COC_API_TOKEN env variable
+		});
+		client
+			.clanByTag('#' + req.params.tag)
+			.then(function(response){
+				if (response.description.indexOf(req.params.token) > -1) {
+					// clan.update
+					console.log("Token is in the description!")
+					clan.activated = true;
+					clan.activate_token = undefined;
+					clan.save(function(err, data) {
+						console.log(req.params.tag + ' is now activated!');
+						res.send({"description": response.description});
+					});
+				}
+				else {
+					res.send({"found": false});
+					console.log("Token is not in the description");
+				}
+			})
+			.catch(err => console.log(err));
+		});
+	});
+
 app.use('/api', router);
 
 app.listen(port);
