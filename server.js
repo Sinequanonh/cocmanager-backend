@@ -6,12 +6,13 @@ var bodyParser 	        = require('body-parser');
 var mongoose 	        = require('mongoose');
 var randtoken			= require('rand-token');
 var clashApi 			= require('clash-of-clans-api');
-var Users				= require('./models/users');
 var sha1 				= require('sha1');
+// Models
+var Users				= require('./models/users');
+var Clans				= require('./models/clans');
 
 // var db = mongoose.connection;
 mongoose.connect('mongodb://127.0.0.1:27017/cocmanager');
-
 
 // mongoose.connect();
 app.use(bodyParser.urlencoded({ extended: true}));
