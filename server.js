@@ -105,7 +105,7 @@ router.route('/signin/:username/:password')
 });
 
 // Clan search
-router.route('/clansearch/:name')
+router.route('/searchclan/:name')
 	.get(function(req, res) {
 		console.log(req.params.name);
 		// CoC API
@@ -125,6 +125,9 @@ router.route('/clansearch/:name')
 router.route('/clan/:clan_tag')
 	.get(function(req, res) {
 		console.log(req.params.clan_tag);
+		let client = clashApi({
+		  	token: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6IjhiNTBlNzYwLWE4YzUtNDY1ZS04YTg4LTY4ZDljMDgzMGYzMCIsImlhdCI6MTQ1NzM5MzcyNiwic3ViIjoiZGV2ZWxvcGVyLzhhODkwMzQzLWU0ZDAtYjlmNS1mNGFjLTljN2FhYTQwNmI1ZCIsInNjb3BlcyI6WyJjbGFzaCJdLCJsaW1pdHMiOlt7InRpZXIiOiJkZXZlbG9wZXIvc2lsdmVyIiwidHlwZSI6InRocm90dGxpbmcifSx7ImNpZHJzIjpbIjQ2LjIyOS4xNTMuMTQ2IiwiNS4xOTYuNzEuOTEiLCI4OS43OC4xOTQuMTk2Il0sInR5cGUiOiJjbGllbnQifV19.WaoOOVg1Wxnnb2PYN2hLA2x1IS6MTCxT9VGl5FbpV_P7NENcC7RoB3geM8u0admc7cRTN62uxh83d5PrxB9A0Q" // Optional, can also use COC_API_TOKEN env variable
+		});
 		client
 			.clanByTag(req.params.clan_tag)
 			.then(response => res.send(response))
