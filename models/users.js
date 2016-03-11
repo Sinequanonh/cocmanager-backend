@@ -10,6 +10,7 @@ var UsersSchema = new Schema({
 	clan_badge: String,
 	clan_request: Boolean,
 	role: String,
+	date_created: Date,
 	bars: {
 		barGold: Number,
 		barGold_comma: Number,

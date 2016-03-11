@@ -81,6 +81,7 @@ router.route('/signup/:username/:password')
 			clan_badge: '',
 			clan_request: false,
 			role: '',
+			date_created: new Date(),
 			bars: {
 				barGold: 2,
 				barGold_comma: 0,
@@ -326,33 +327,25 @@ router.route("/acceptMember/:name/:clan_tag/:clan_name")
 			user.save(function(err, res) {
 				console.log("accept member: " + req.params.name);
 			});
-			res.send(user);
-			requestToMember(req.params.name, req.params.clan_tag);
-		});
-		// Move requested member to list of members
-		var requestToMember = function(name, tag) {
+			var requestToMember = function(name, tag) {
 			Clans.findOne({"tag": tag}, function(err, clan) {
 				console.log("ON MOVE LE MEMBER");
-				// var memberToMove = clan.member_requests[{"name": name}];
 				clan.members.push(
 					{"name": name, "role": 'member'}
 				);
-				console.log("LES MEMBRES>>>>>");
-				// _.each(clan.member_requests, function(member) {
-				// 	if (member.name == name)
-				// 		delete member[member.name];
-				// });
-
 				clan.member_requests = _.without(clan.member_requests, _.findWhere(clan.member_requests, {name: name}));
-
 				clan.save(function(err, data) {
 					console.log("New member!");
 				});
-				// console.log(memberToMove);
+				res.send(clan);
 				console.log(">>>>>>>>>>>>");
 				console.log(clan);
-			});
-		};
+				});
+			};
+			requestToMember(req.params.name, req.params.clan_tag);
+		});
+		// Move requested member to list of members
+
 	});
 
 app.use('/api', router, limiter);
