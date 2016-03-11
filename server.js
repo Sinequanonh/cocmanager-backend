@@ -268,6 +268,30 @@ router.route('/validateclan/:tag/:token/:leader')
 
 	});
 
+// Gets clan profile
+router.route('/myclan/:tag')
+	.get(function(req, res) {
+		Clans.findOne({"tag": req.params.tag}, function(err, clan) {
+			if (clan)
+				res.send(clan);
+			else {
+				res.send({"message": "No such clan has been found"});
+			}
+		})
+	});
+
+// Gets all clans
+router.route('/getAllClans')
+	.get(function(req, res) {
+		Clans.find(function(err, clan) {
+			if (clan)
+				res.send(clan);
+			else {
+				res.send({"message": "No clan have been found"});
+			}
+		})
+	});
+
 app.use('/api', router, limiter);
 
 app.listen(port);
