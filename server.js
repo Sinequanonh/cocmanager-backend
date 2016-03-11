@@ -70,39 +70,51 @@ router.route('/signup/:username/:password')
 	.post(function(req, res) {
 		console.log(new Date() + ' | ' + "user name  : " + req.params.username);
 		console.log(new Date() + ' | ' + "sha1 passwd: " + sha1(req.params.password));
-		var randtok = randtoken.generate(32);
-		console.log(new Date() + ' | ' + 'Signing up: generating token... ' + randtok);
-		var newSubscribed = new Users({
-			token: randtok,
-			user: req.params.username,
-			password: sha1(req.params.password),
-			clan_tag: '',
-			clan_name: '',
-			clan_badge: '',
-			clan_request: false,
-			role: '',
-			date_created: new Date(),
-			bars: {
-				barGold: 2,
-				barGold_comma: 0,
-				barElixir: 4,
-				barElixir_comma: 0,
-				barDarkElixir: 3,
-				barDarkElixir_comma: 0,
-				gems: 0
+
+		Users.findOne({"user": req.params.username}, function(err, user) {
+			if (user) {
+				res.send({"message": false});
+			} else {
+				createNewUser();
 			}
+
 		});
-		newSubscribed.save(function(error, data) {
-		    if (error) {
-		        res.json(error);
-		        console.log(new Date() + ' | ' + error);
-		    }
-		    else {
-		    	data.password = undefined;
-		        res.json(data);
-		        console.log(new Date() + ' | ' + data);
-		    }
-		});
+
+		var createNewUser = function() {
+			var randtok = randtoken.generate(32);
+			console.log(new Date() + ' | ' + 'Signing up: generating token... ' + randtok);
+			var newSubscribed = new Users({
+				token: randtok,
+				user: req.params.username,
+				password: sha1(req.params.password),
+				clan_tag: '',
+				clan_name: '',
+				clan_badge: '',
+				clan_request: false,
+				role: '',
+				date_created: new Date(),
+				bars: {
+					barGold: 2,
+					barGold_comma: 0,
+					barElixir: 4,
+					barElixir_comma: 0,
+					barDarkElixir: 3,
+					barDarkElixir_comma: 0,
+					gems: 0
+				}
+			});
+			newSubscribed.save(function(error, data) {
+			    if (error) {
+			        res.json(error);
+			        console.log(new Date() + ' | ' + error);
+			    }
+			    else {
+			    	data.password = undefined;
+			        res.json(data);
+			        console.log(new Date() + ' | ' + data);
+			    }
+			});
+		};
 	});
 
 // Signin
@@ -117,7 +129,7 @@ router.route('/signin/:username/:password')
         	res.send(users);
         }
         else {
-        	res.json(false);
+        	res.json({'message': false});
         }
     });
 });
