@@ -78,6 +78,7 @@ router.route('/signup/:username/:password')
 			clan_tag: '',
 			clan_name: '',
 			clan_badge: '',
+			clan_request: false,
 			role: '',
 			bars: {
 				barGold: 2,
@@ -298,15 +299,51 @@ router.route("/joinYourClan/:tag/:name")
 	.post(function(req, res) {
 		Clans.findOne({"tag": req.params.tag}, function(err, clan) {
 			console.log(clan.members);
-			clan.member_request.push(
+			clan.member_requests.push(
 				{'name': req.params.name, 'date_request': new Date()}
 			);
 			clan.save(function(err, res) {
 				console.log(res);
 			});
 			res.send(clan);
-
+			Users.findOne({"user": req.params.name}, function(err, user) {
+				user.clan_request = true;
+				user.save(function(err, res) {
+					console.log(req.params.name + ' has requested a clan membership!');
+				});
+			});
 		});
+	});
+
+router.route("/acceptMember/:name/:clan_tag")
+	.post(function(req, res) {
+		Users.findOne({"user": req.params.name}, function(err, user) {
+			console.log(user);
+			user.clan_tag = req.params.clan_tag;
+			user.role = 'member';
+			user.clan_name = req.params.name;
+			user.save(function(err, res) {
+				console.log("accept member: " + req.params.name);
+			});
+			res.send(user);
+			requestToMember(req.params.name, req.params.clan_tag);
+		});
+		// Move requested member to list of members
+		var requestToMember = function(name, tag) {
+			Clans.findOne({"tag": tag}, function(err, clan) {
+				console.log("ON MOVE LE MEMBER");
+				// var memberToMove = clan.member_requests[{"name": name}];
+				clan.members.push(
+					{"name": name, "role": 'member'}
+				);
+				clan.save(function(err, data){
+					console.log("New member!");
+				});
+				// console.log(memberToMove);
+				console.log(">>>>>>>>>>>>");
+				console.log(clan);
+			});
+		};
 	});
 
 app.use('/api', router, limiter);
