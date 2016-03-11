@@ -190,7 +190,7 @@ router.route('/createclan/:clan_register/:leader')
 			.clanByTag('#' + req.params.clan_register)
 			.then(function(response) {
 				console.log(new Date() + ' | ' + "Clan tag does exist: " + response.name);
-				createClan();
+				createClan(response);
 				res.send({"token": randtok});
 			})
 			.catch(function(err) {
@@ -198,11 +198,12 @@ router.route('/createclan/:clan_register/:leader')
 				res.send({found: false});
 			});
 		// Initializing clan settings
-		var createClan = function () {
+		var createClan = function (res) {
 			console.log(new Date() + ' | ' + "Creating clan...");
 			var clanModel = new Clans({
 				tag: req.params.clan_register,
-				// leader: req.params.leader,
+				name: res.name,
+				badge: res.badgeUrls.small,
 				members: [
 					{ name: req.params.leader , role: 'leader'}
 				],
@@ -217,7 +218,7 @@ router.route('/createclan/:clan_register/:leader')
 		    }
 		    else {
 		        console.log(new Date() + ' | ' + data);
-		        console.log(new Date() + ' | ' + "Clan was successfully created!");
+		        console.log(new Date() + ' | ' + "Clan was successfully initialized...");
 		    }
 		});
 		}
@@ -236,7 +237,7 @@ router.route('/validateclan/:tag/:token/:leader')
 			.then(function(response){
 				if (response.description.indexOf(req.params.token) > -1) {
 					// clan.update
-					console.log(new Date() + ' | ' + "Validation: Token is in the description!")
+					console.log(new Date() + ' | ' + "...Token has been found in description: Clan was successfully created!")
 					clan.activated = true;
 					clan.activate_token = undefined;
 					clan.save(function(err, data) {
@@ -290,6 +291,22 @@ router.route('/getAllClans')
 				res.send({"message": "No clan have been found"});
 			}
 		})
+	});
+
+// Join your clan
+router.route("/joinYourClan/:tag/:name")
+	.post(function(req, res) {
+		Clans.findOne({"tag": req.params.tag}, function(err, clan) {
+			console.log(clan.members);
+			clan.member_request.push(
+				{'name': req.params.name, 'date_request': new Date()}
+			);
+			clan.save(function(err, res) {
+				console.log(res);
+			});
+			res.send(clan);
+
+		});
 	});
 
 app.use('/api', router, limiter);

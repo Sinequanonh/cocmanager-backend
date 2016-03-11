@@ -8,6 +8,10 @@ var ClansSchema = new Schema({
 		members: [
 			{ name: String, role: String }
 		],
+		member_requests: [
+			{ name: String },
+			{ date_request: Date }
+		],
 		activated: Boolean,
 		activate_token: String,
 		date_created: Date
