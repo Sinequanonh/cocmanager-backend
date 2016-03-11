@@ -316,13 +316,13 @@ router.route("/joinYourClan/:tag/:name")
 		});
 	});
 
-router.route("/acceptMember/:name/:clan_tag")
+router.route("/acceptMember/:name/:clan_tag/:clan_name")
 	.post(function(req, res) {
 		Users.findOne({"user": req.params.name}, function(err, user) {
 			console.log(user);
 			user.clan_tag = req.params.clan_tag;
 			user.role = 'member';
-			user.clan_name = req.params.name;
+			user.clan_name = req.params.clan_name;
 			user.save(function(err, res) {
 				console.log("accept member: " + req.params.name);
 			});
