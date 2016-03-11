@@ -9,6 +9,7 @@ var clashApi 			= require('clash-of-clans-api');
 var sha1 				= require('sha1');
 var sha1 				= require('sha1');
 var rateLimit 			= require('express-rate-limit');
+var _ 					= require('underscore');
 // Models
 var Users				= require('./models/users');
 var Clans				= require('./models/clans');
@@ -336,7 +337,15 @@ router.route("/acceptMember/:name/:clan_tag")
 				clan.members.push(
 					{"name": name, "role": 'member'}
 				);
-				clan.save(function(err, data){
+				console.log("LES MEMBRES>>>>>");
+				// _.each(clan.member_requests, function(member) {
+				// 	if (member.name == name)
+				// 		delete member[member.name];
+				// });
+
+				clan.member_requests = _.without(clan.member_requests, _.findWhere(clan.member_requests, {name: name}));
+
+				clan.save(function(err, data) {
 					console.log("New member!");
 				});
 				// console.log(memberToMove);
