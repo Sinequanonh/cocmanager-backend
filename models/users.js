@@ -5,6 +5,10 @@ var UsersSchema = new Schema({
 	token: String,
 	user: String,
 	password: String,
+	clan_tag: String,
+	clan_name: String,
+	clan_badge: String,
+	role: String,
 	bars: {
 		barGold: Number,
 		barGold_comma: Number,

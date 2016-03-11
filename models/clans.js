@@ -3,9 +3,8 @@ var Schema			= mongoose.Schema;
 
 var ClansSchema = new Schema({
 		tag: String,
-		leader: String,
 		members: [
-			{ name: String }
+			{ name: String, role: String }
 		],
 		activated: Boolean,
 		activate_token: String,

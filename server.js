@@ -75,6 +75,10 @@ router.route('/signup/:username/:password')
 			token: randtok,
 			user: req.params.username,
 			password: sha1(req.params.password),
+			clan_tag: '',
+			clan_name: '',
+			clan_badge: '',
+			role: '',
 			bars: {
 				barGold: 2,
 				barGold_comma: 0,
@@ -183,9 +187,9 @@ router.route('/createclan/:clan_register/:leader')
 		});
 		// Checks if the clan tag does exist
 		client
-			.clanByTag(req.params.clan_register)
+			.clanByTag('#' + req.params.clan_register)
 			.then(function(response) {
-				console.log(new Date() + ' | ' + "Clan tag does exist");
+				console.log(new Date() + ' | ' + "Clan tag does exist: " + response.name);
 				createClan();
 				res.send({"token": randtok});
 			})
@@ -198,29 +202,29 @@ router.route('/createclan/:clan_register/:leader')
 			console.log(new Date() + ' | ' + "Creating clan...");
 			var clanModel = new Clans({
 				tag: req.params.clan_register,
-				leader: req.params.leader,
+				// leader: req.params.leader,
 				members: [
-					{ name: String }
+					{ name: req.params.leader , role: 'leader'}
 				],
 				activated: false,
 				activate_token: randtok,
 				date_created: new Date()
-			});
-			// Save model into the database
-			clanModel.save(function(error, data) {
-			    if (error) {
-			        console.log(new Date() + ' | ' + error);
-			    }
-			    else {
-			        console.log(new Date() + ' | ' + data);
-			        console.log(new Date() + ' | ' + "Clan was successfully created!");
-			    }
-			});
+		});
+		// Save model into the database
+		clanModel.save(function(error, data) {
+		    if (error) {
+		        console.log(new Date() + ' | ' + error);
+		    }
+		    else {
+		        console.log(new Date() + ' | ' + data);
+		        console.log(new Date() + ' | ' + "Clan was successfully created!");
+		    }
+		});
 		}
 	});
 
 // Validates clan
-router.route('/validateclan/:tag/:token')
+router.route('/validateclan/:tag/:token/:leader')
 	.post(function(req, res) {
 		console.log(new Date() + ' | ' + "Validating clan...");
 		Clans.findOne({"tag": req.params.tag}, function(err, clan) {
@@ -237,6 +241,7 @@ router.route('/validateclan/:tag/:token')
 					clan.activate_token = undefined;
 					clan.save(function(err, data) {
 						console.log(new Date() + ' | ' + req.params.tag + ' is now activated!');
+						linkUserToClan(response);
 						res.send({"description": response.description});
 					});
 				}
@@ -247,6 +252,20 @@ router.route('/validateclan/:tag/:token')
 			})
 			.catch(err => console.log(new Date() + ' | ' + err));
 		});
+		// Links clan to user
+		var linkUserToClan = function(res) {
+			Users.findOne({"user": req.params.leader}, function(err, user) {
+				user.clan_tag = req.params.tag;
+				user.role = 'leader';
+				user.clan_name = res.name;
+				user.clan_badge = res.badgeUrls.small;
+				user.save(function(err, data) {
+					console.log(req.params.leader + " successfully created:");
+					console.log(user.clan_name + '!');
+				});
+			});
+		};
+
 	});
 
 app.use('/api', router, limiter);
