@@ -140,7 +140,7 @@ router.route('/searchclan/:name')
 		console.log(new Date() + ' | ' + 'Searching clan by name: ' + req.params.name);
 		// CoC API
 		let client = clashApi({
-		  	token: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6IjhiNTBlNzYwLWE4YzUtNDY1ZS04YTg4LTY4ZDljMDgzMGYzMCIsImlhdCI6MTQ1NzM5MzcyNiwic3ViIjoiZGV2ZWxvcGVyLzhhODkwMzQzLWU0ZDAtYjlmNS1mNGFjLTljN2FhYTQwNmI1ZCIsInNjb3BlcyI6WyJjbGFzaCJdLCJsaW1pdHMiOlt7InRpZXIiOiJkZXZlbG9wZXIvc2lsdmVyIiwidHlwZSI6InRocm90dGxpbmcifSx7ImNpZHJzIjpbIjQ2LjIyOS4xNTMuMTQ2IiwiNS4xOTYuNzEuOTEiLCI4OS43OC4xOTQuMTk2Il0sInR5cGUiOiJjbGllbnQifV19.WaoOOVg1Wxnnb2PYN2hLA2x1IS6MTCxT9VGl5FbpV_P7NENcC7RoB3geM8u0admc7cRTN62uxh83d5PrxB9A0Q" // Optional, can also use COC_API_TOKEN env variable
+		  	token: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6IjM2ZTBmYTMyLTFkODUtNGY2ZS04NGUzLTVlYWY0YWZmMmQzNSIsImlhdCI6MTQ1Nzg3OTQ2OCwic3ViIjoiZGV2ZWxvcGVyLzhhODkwMzQzLWU0ZDAtYjlmNS1mNGFjLTljN2FhYTQwNmI1ZCIsInNjb3BlcyI6WyJjbGFzaCJdLCJsaW1pdHMiOlt7InRpZXIiOiJkZXZlbG9wZXIvc2lsdmVyIiwidHlwZSI6InRocm90dGxpbmcifSx7ImNpZHJzIjpbIjg5LjY1LjU5LjM1IiwiNDYuMjI5LjE1My4xNDYiLCI1LjE5Ni43MS45MSIsIjg5Ljc4LjE5NC4xOTYiXSwidHlwZSI6ImNsaWVudCJ9XX0.9_Vk9dNyMb7rz3zjom1lA3JKQJPS2_JLquFDR3Ml93Qnkme1z14rpi8rOUDsUbvHCJcj8h0-ajxud82ytMx2iA" // Optional, can also use COC_API_TOKEN env variable
 		});
 		client
 			.clans()
@@ -156,7 +156,7 @@ router.route('/clan/:clan_tag')
 	.get(function(req, res) {
 		console.log(new Date() + ' | ' + 'Searching clan by tag: #' + req.params.clan_tag);
 		let client = clashApi({
-		  	token: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6IjhiNTBlNzYwLWE4YzUtNDY1ZS04YTg4LTY4ZDljMDgzMGYzMCIsImlhdCI6MTQ1NzM5MzcyNiwic3ViIjoiZGV2ZWxvcGVyLzhhODkwMzQzLWU0ZDAtYjlmNS1mNGFjLTljN2FhYTQwNmI1ZCIsInNjb3BlcyI6WyJjbGFzaCJdLCJsaW1pdHMiOlt7InRpZXIiOiJkZXZlbG9wZXIvc2lsdmVyIiwidHlwZSI6InRocm90dGxpbmcifSx7ImNpZHJzIjpbIjQ2LjIyOS4xNTMuMTQ2IiwiNS4xOTYuNzEuOTEiLCI4OS43OC4xOTQuMTk2Il0sInR5cGUiOiJjbGllbnQifV19.WaoOOVg1Wxnnb2PYN2hLA2x1IS6MTCxT9VGl5FbpV_P7NENcC7RoB3geM8u0admc7cRTN62uxh83d5PrxB9A0Q" // Optional, can also use COC_API_TOKEN env variable
+		  	token: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6IjM2ZTBmYTMyLTFkODUtNGY2ZS04NGUzLTVlYWY0YWZmMmQzNSIsImlhdCI6MTQ1Nzg3OTQ2OCwic3ViIjoiZGV2ZWxvcGVyLzhhODkwMzQzLWU0ZDAtYjlmNS1mNGFjLTljN2FhYTQwNmI1ZCIsInNjb3BlcyI6WyJjbGFzaCJdLCJsaW1pdHMiOlt7InRpZXIiOiJkZXZlbG9wZXIvc2lsdmVyIiwidHlwZSI6InRocm90dGxpbmcifSx7ImNpZHJzIjpbIjg5LjY1LjU5LjM1IiwiNDYuMjI5LjE1My4xNDYiLCI1LjE5Ni43MS45MSIsIjg5Ljc4LjE5NC4xOTYiXSwidHlwZSI6ImNsaWVudCJ9XX0.9_Vk9dNyMb7rz3zjom1lA3JKQJPS2_JLquFDR3Ml93Qnkme1z14rpi8rOUDsUbvHCJcj8h0-ajxud82ytMx2iA" // Optional, can also use COC_API_TOKEN env variable
 		});
 		client
 			.clanByTag('#' + req.params.clan_tag)
@@ -198,7 +198,7 @@ router.route('/createclan/:clan_register/:leader')
 		var randtok = randtoken.generate(4);
 		console.log(new Date() + ' | ' + 'clan creation tag: ' + req.params.clan_register);
 		let client = clashApi({
-		  	token: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6IjhiNTBlNzYwLWE4YzUtNDY1ZS04YTg4LTY4ZDljMDgzMGYzMCIsImlhdCI6MTQ1NzM5MzcyNiwic3ViIjoiZGV2ZWxvcGVyLzhhODkwMzQzLWU0ZDAtYjlmNS1mNGFjLTljN2FhYTQwNmI1ZCIsInNjb3BlcyI6WyJjbGFzaCJdLCJsaW1pdHMiOlt7InRpZXIiOiJkZXZlbG9wZXIvc2lsdmVyIiwidHlwZSI6InRocm90dGxpbmcifSx7ImNpZHJzIjpbIjQ2LjIyOS4xNTMuMTQ2IiwiNS4xOTYuNzEuOTEiLCI4OS43OC4xOTQuMTk2Il0sInR5cGUiOiJjbGllbnQifV19.WaoOOVg1Wxnnb2PYN2hLA2x1IS6MTCxT9VGl5FbpV_P7NENcC7RoB3geM8u0admc7cRTN62uxh83d5PrxB9A0Q" // Optional, can also use COC_API_TOKEN env variable
+		  	token: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6IjM2ZTBmYTMyLTFkODUtNGY2ZS04NGUzLTVlYWY0YWZmMmQzNSIsImlhdCI6MTQ1Nzg3OTQ2OCwic3ViIjoiZGV2ZWxvcGVyLzhhODkwMzQzLWU0ZDAtYjlmNS1mNGFjLTljN2FhYTQwNmI1ZCIsInNjb3BlcyI6WyJjbGFzaCJdLCJsaW1pdHMiOlt7InRpZXIiOiJkZXZlbG9wZXIvc2lsdmVyIiwidHlwZSI6InRocm90dGxpbmcifSx7ImNpZHJzIjpbIjg5LjY1LjU5LjM1IiwiNDYuMjI5LjE1My4xNDYiLCI1LjE5Ni43MS45MSIsIjg5Ljc4LjE5NC4xOTYiXSwidHlwZSI6ImNsaWVudCJ9XX0.9_Vk9dNyMb7rz3zjom1lA3JKQJPS2_JLquFDR3Ml93Qnkme1z14rpi8rOUDsUbvHCJcj8h0-ajxud82ytMx2iA" // Optional, can also use COC_API_TOKEN env variable
 		});
 		// Checks if the clan tag does exist
 		client
@@ -245,7 +245,7 @@ router.route('/validateclan/:tag/:token/:leader')
 		console.log(new Date() + ' | ' + "Validating clan...");
 		Clans.findOne({"tag": req.params.tag}, function(err, clan) {
 		let client = clashApi({
-	  		token: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6IjhiNTBlNzYwLWE4YzUtNDY1ZS04YTg4LTY4ZDljMDgzMGYzMCIsImlhdCI6MTQ1NzM5MzcyNiwic3ViIjoiZGV2ZWxvcGVyLzhhODkwMzQzLWU0ZDAtYjlmNS1mNGFjLTljN2FhYTQwNmI1ZCIsInNjb3BlcyI6WyJjbGFzaCJdLCJsaW1pdHMiOlt7InRpZXIiOiJkZXZlbG9wZXIvc2lsdmVyIiwidHlwZSI6InRocm90dGxpbmcifSx7ImNpZHJzIjpbIjQ2LjIyOS4xNTMuMTQ2IiwiNS4xOTYuNzEuOTEiLCI4OS43OC4xOTQuMTk2Il0sInR5cGUiOiJjbGllbnQifV19.WaoOOVg1Wxnnb2PYN2hLA2x1IS6MTCxT9VGl5FbpV_P7NENcC7RoB3geM8u0admc7cRTN62uxh83d5PrxB9A0Q" // Optional, can also use COC_API_TOKEN env variable
+	  		token: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6IjM2ZTBmYTMyLTFkODUtNGY2ZS04NGUzLTVlYWY0YWZmMmQzNSIsImlhdCI6MTQ1Nzg3OTQ2OCwic3ViIjoiZGV2ZWxvcGVyLzhhODkwMzQzLWU0ZDAtYjlmNS1mNGFjLTljN2FhYTQwNmI1ZCIsInNjb3BlcyI6WyJjbGFzaCJdLCJsaW1pdHMiOlt7InRpZXIiOiJkZXZlbG9wZXIvc2lsdmVyIiwidHlwZSI6InRocm90dGxpbmcifSx7ImNpZHJzIjpbIjg5LjY1LjU5LjM1IiwiNDYuMjI5LjE1My4xNDYiLCI1LjE5Ni43MS45MSIsIjg5Ljc4LjE5NC4xOTYiXSwidHlwZSI6ImNsaWVudCJ9XX0.9_Vk9dNyMb7rz3zjom1lA3JKQJPS2_JLquFDR3Ml93Qnkme1z14rpi8rOUDsUbvHCJcj8h0-ajxud82ytMx2iA" // Optional, can also use COC_API_TOKEN env variable
 		});
 		client
 			.clanByTag('#' + req.params.tag)
@@ -332,13 +332,13 @@ router.route("/joinYourClan/:tag/:name")
 router.route("/acceptMember/:name/:clan_tag/:clan_name")
 	.post(function(req, res) {
 		Users.findOne({"user": req.params.name}, function(err, user) {
-			console.log(user);
 			user.clan_tag = req.params.clan_tag;
 			user.role = 'member';
 			user.clan_name = req.params.clan_name;
 			user.save(function(err, res) {
 				console.log("accept member: " + req.params.name);
 			});
+			// Move requested member to list of members
 			var requestToMember = function(name, tag) {
 			Clans.findOne({"tag": tag}, function(err, clan) {
 				console.log("ON MOVE LE MEMBER");
@@ -350,15 +350,34 @@ router.route("/acceptMember/:name/:clan_tag/:clan_name")
 					console.log("New member!");
 				});
 				res.send(clan);
-				console.log(">>>>>>>>>>>>");
-				console.log(clan);
+				console.log(">>>>>>>>>>>> Badge");
+				console.log(clan.badge);
+				Users.findOne({"user": req.params.name}, function(err, user) {
+					user.clan_badge = clan.badge;
+					user.save(function(err, data) {});
+				});
 				});
 			};
 			requestToMember(req.params.name, req.params.clan_tag);
 		});
-		// Move requested member to list of members
-
 	});
+
+router.route("/refuseMember/:name/:clan_tag/:clan_name")
+	.post(function(req, res) {
+		Users.findOne({"user": req.params.name}, function(err, user) {
+			user.clan_request = false;
+			user.save(function(err, data) {
+			// Then we clean the member request list
+			Clans.findOne({"tag": req.params.clan_tag}, function(err, clan) {
+				clan.member_requests = _.without(clan.member_requests, _.findWhere(clan.member_requests, {name: req.params.name}));
+				clan.save(function(err, data) {
+					console.log(req.params.name + ' has been refused from his clan');
+					res.send(data);
+				});
+			});
+		});
+	});
+});
 
 app.use('/api', router, limiter);
 
