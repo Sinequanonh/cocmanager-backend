@@ -379,6 +379,22 @@ router.route("/refuseMember/:name/:clan_tag/:clan_name")
 	});
 });
 
+router.route("/saveClan/:war/:clan_tag")
+	.post(function(req, res) {
+		console.log(JSON.parse(req.params.war));
+		Clans.findOne({"tag": req.params.clan_tag}, function(err, clan) {
+			console.log("OOOOOOOOOOOOOOOOOOOOOO");
+			console.log(JSON.parse(req.params.war));
+			clan.wars.push(
+				JSON.parse(req.params.war)
+			);
+			console.log(clan.wars);
+			clan.save(function(err, data) {
+				res.send(data);
+			});
+		});
+	});
+
 app.use('/api', router, limiter);
 
 app.listen(port);

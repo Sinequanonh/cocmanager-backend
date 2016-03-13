@@ -14,7 +14,10 @@ var ClansSchema = new Schema({
 		],
 		activated: Boolean,
 		activate_token: String,
-		date_created: Date
+		date_created: Date,
+		wars: [
+			{ participants: [{ name: String }], show: Boolean , show_index: Array, date: Date}
+		]
 }, {collection: 'clans'});
 
 module.exports = mongoose.model('Clan', ClansSchema);
