@@ -16,10 +16,12 @@ var ClansSchema = new Schema({
 		activate_token: String,
 		date_created: Date,
 		wars: [
-			{ participants: [{ name: String, attack_1: Number, attack_2: Number }], 
-			  show: Boolean , 
-			  show_index: Array, 
-			  date: Date 
+			{
+				id: String,
+				participants: [{ name: String, attack_1: Number, attack_2: Number }], 
+				show: Boolean , 
+				show_index: Array, 
+				date: Date 
 			}
 		]
 }, {collection: 'clans'});

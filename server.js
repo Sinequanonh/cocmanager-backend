@@ -13,6 +13,7 @@ var _ 					= require('underscore');
 // Models
 var Users				= require('./models/users');
 var Clans				= require('./models/clans');
+var objectId 			= mongoose.Types.ObjectId;
 
 // var db = mongoose.connection;
 mongoose.connect('mongodb://127.0.0.1:27017/cocmanager');
@@ -397,15 +398,32 @@ router.route("/saveWarClan/:war/:clan_tag")
 		});
 	});
 
+// Get Clan wars by clan tag
 router.route("/getClanWars/:clan_tag")
 	.get(function(req, res) {
 		Clans.findOne({"tag": req.params.clan_tag}, function(err, clan) {
 			console.log(clan);
 			var wars = clan.wars;
 			res.send(wars);
-		}) 
+		});
 	});
 
+// Update war
+router.route("/updateWar/:war/:clan_tag")
+	.post(function(req, res) {
+		Clans.findOne({"tag": req.params.clan_tag}, function(err, clan) {
+			var currentwar = JSON.parse(req.params.war);
+			_.each(clan.wars, function(war, index) {
+				var prout = _.find(war, {id: currentwar.id});
+				console.log(prout);
+				if (prout) { clan.wars[index].participants = currentwar.participants; }
+			});
+			clan.save(function(err, data) {
+				res.send(data);
+			});
+		});
+	});
+		
 app.use('/api', router, limiter);
 
 app.listen(port);
