@@ -362,6 +362,7 @@ router.route("/acceptMember/:name/:clan_tag/:clan_name")
 		});
 	});
 
+// Refuse member request
 router.route("/refuseMember/:name/:clan_tag/:clan_name")
 	.post(function(req, res) {
 		Users.findOne({"user": req.params.name}, function(err, user) {
@@ -379,7 +380,8 @@ router.route("/refuseMember/:name/:clan_tag/:clan_name")
 	});
 });
 
-router.route("/saveClan/:war/:clan_tag")
+// Save War Clan
+router.route("/saveWarClan/:war/:clan_tag")
 	.post(function(req, res) {
 		console.log(JSON.parse(req.params.war));
 		Clans.findOne({"tag": req.params.clan_tag}, function(err, clan) {
@@ -393,6 +395,15 @@ router.route("/saveClan/:war/:clan_tag")
 				res.send(data);
 			});
 		});
+	});
+
+router.route("/getClanWars/:clan_tag")
+	.get(function(req, res) {
+		Clans.findOne({"tag": req.params.clan_tag}, function(err, clan) {
+			console.log(clan);
+			var wars = clan.wars;
+			res.send(wars);
+		}) 
 	});
 
 app.use('/api', router, limiter);
