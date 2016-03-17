@@ -18,7 +18,7 @@ var ClansSchema = new Schema({
 		wars: [
 			{
 				id: String,
-				participants: [{ name: String, attack_1: Number, attack_2: Number }], 
+				participants: [{ name: String, attack_1: Number, percentage_1: Number, attack_2: Number, percentage_2: Number}], 
 				show: Boolean , 
 				show_index: Array, 
 				date: Date 
