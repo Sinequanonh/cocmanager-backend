@@ -413,10 +413,38 @@ router.route("/updateWar/:war/:clan_tag")
 	.post(function(req, res) {
 		Clans.findOne({"tag": req.params.clan_tag}, function(err, clan) {
 			var currentwar = JSON.parse(req.params.war);
+			console.log(currentwar);
+
+			// Get destruction average
+			var destruction_average = 0;
+			var stars = 0;
+			var i = 0;
+			_.each(currentwar.participants, function(participant) {
+				destruction_average += participant.percentage_1;
+				destruction_average += participant.percentage_2;
+				stars += participant.attack_1;
+				stars += participant.attack_2;
+				i = i + 2;
+
+			});
+			destruction_average = (destruction_average/i).toFixed(2);
+
 			_.each(clan.wars, function(war, index) {
-				var prout = _.find(war, {id: currentwar.id});
-				console.log(prout);
-				if (prout) { clan.wars[index].participants = currentwar.participants; }
+				var wardb = _.find(war, {id: currentwar.id});
+				// console.log(wardb);
+
+				// We update the right one
+				if (wardb) {
+					clan.wars[index].participants = currentwar.participants;
+					clan.wars[index].destruction_average = destruction_average;
+					clan.wars[index].stars = stars;
+					clan.wars[index].state = currentwar.state;
+					console.log(clan.wars[index].destruction_average);
+					for (var j = 0; j < clan.wars[index].participants.length; j++) {
+						clan.wars[index].participants[j].destruction_average = ((clan.wars[index].participants[j].percentage_1 + clan.wars[index].participants[j].percentage_2) / 2).toFixed(2);
+						console.log(clan.wars[index].participants[j].name);
+					}
+				}
 			});
 			clan.save(function(err, data) {
 				res.send(data);

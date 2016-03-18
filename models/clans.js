@@ -18,10 +18,14 @@ var ClansSchema = new Schema({
 		wars: [
 			{
 				id: String,
-				participants: [{ name: String, attack_1: Number, percentage_1: Number, attack_2: Number, percentage_2: Number}], 
-				show: Boolean , 
+				participants: [{ name: String, attack_1: Number, percentage_1: Number, attack_2: Number, percentage_2: Number, destruction_average: Number}],
+				destruction_average: Number,
+				show: Boolean, 
 				show_index: Array, 
-				date: Date 
+				date: Date,
+				state: String,
+				typeofwar: Number,
+				stars: Number
 			}
 		]
 }, {collection: 'clans'});
