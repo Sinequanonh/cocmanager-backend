@@ -439,6 +439,7 @@ router.route("/updateWar/:war/:clan_tag")
 					clan.wars[index].destruction_average = destruction_average;
 					clan.wars[index].stars = stars;
 					clan.wars[index].state = currentwar.state;
+					clan.wars[index].ennemies = currentwar.ennemies;
 					console.log(clan.wars[index].destruction_average);
 					for (var j = 0; j < clan.wars[index].participants.length; j++) {
 						clan.wars[index].participants[j].destruction_average = ((clan.wars[index].participants[j].percentage_1 + clan.wars[index].participants[j].percentage_2) / 2).toFixed(2);

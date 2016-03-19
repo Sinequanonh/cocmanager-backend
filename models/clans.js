@@ -25,7 +25,8 @@ var ClansSchema = new Schema({
 				date: Date,
 				state: String,
 				typeofwar: Number,
-				stars: Number
+				stars: Number,
+				ennemies: [ { th: Number, position: Number, called_by: String } ]
 			}
 		]
 }, {collection: 'clans'});
