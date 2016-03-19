@@ -452,7 +452,22 @@ router.route("/updateWar/:war/:clan_tag")
 			});
 		});
 	});
-		
+
+router.route('/getWarById/:war_id/:clan_tag')
+	.get(function(req, res) {
+-		Clans.findOne({"tag": req.params.clan_tag}, function(err, clan) {
+			_.each(clan.wars, function(war, index) {
+				var inwar = _.find(war, {id: req.params.war_id});
+				console.log(inwar);
+				if (inwar) {
+					res.send(inwar);
+				}
+			});
+			res.send({'data': 'nothing'});
+			
+		});
+	});
+
 app.use('/api', router, limiter);
 
 app.listen(port);
