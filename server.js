@@ -417,18 +417,20 @@ router.route("/updateWar/:war/:clan_tag")
 
 			// Get destruction average
 			var destruction_average = 0;
-			var stars = 0;
 			var i = 0;
 			_.each(currentwar.participants, function(participant) {
 				destruction_average += participant.percentage_1;
 				destruction_average += participant.percentage_2;
-				stars += participant.attack_1;
-				stars += participant.attack_2;
 				i = i + 2;
-
 			});
 			destruction_average = (destruction_average/i).toFixed(2);
 
+			var stars = 0;
+			i = 0;
+			_.each(currentwar.ennemies, function(ennemy) {
+				stars += ennemy.best_attack;
+			});
+			var reswar = {};
 			_.each(clan.wars, function(war, index) {
 				var wardb = _.find(war, {id: currentwar.id});
 				// console.log(wardb);
@@ -440,15 +442,18 @@ router.route("/updateWar/:war/:clan_tag")
 					clan.wars[index].stars = stars;
 					clan.wars[index].state = currentwar.state;
 					clan.wars[index].ennemies = currentwar.ennemies;
+					clan.wars[index].strategy = currentwar.strategy;
+
 					console.log(clan.wars[index].destruction_average);
 					for (var j = 0; j < clan.wars[index].participants.length; j++) {
 						clan.wars[index].participants[j].destruction_average = ((clan.wars[index].participants[j].percentage_1 + clan.wars[index].participants[j].percentage_2) / 2).toFixed(2);
 						console.log(clan.wars[index].participants[j].name);
 					}
+					reswar = clan.wars[index];
 				}
 			});
 			clan.save(function(err, data) {
-				res.send(data);
+				res.send(reswar);
 			});
 		});
 	});
