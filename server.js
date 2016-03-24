@@ -94,6 +94,7 @@ router.route('/signup/:username/:password')
 				clan_request: false,
 				role: '',
 				date_created: new Date(),
+				th: 1,
 				bars: {
 					barGold: 2,
 					barGold_comma: 0,
@@ -194,7 +195,7 @@ router.route('/profile/:profile/:user')
 	});
 
 // Create clan
-router.route('/createclan/:clan_register/:leader')
+router.route('/createclan/:clan_register/:leader/:th')
 	.post(function(req, res) {
 		var randtok = randtoken.generate(4);
 		console.log(new Date() + ' | ' + 'clan creation tag: ' + req.params.clan_register);
@@ -221,7 +222,7 @@ router.route('/createclan/:clan_register/:leader')
 				name: res.name,
 				badge: res.badgeUrls.small,
 				members: [
-					{ name: req.params.leader , role: 'leader'}
+					{ name: req.params.leader, th: req.params.th, role: 'leader' }
 				],
 				activated: false,
 				activate_token: randtok,
@@ -310,15 +311,15 @@ router.route('/getAllClans')
 	});
 
 // Join your clan
-router.route("/joinYourClan/:tag/:name")
+router.route("/joinYourClan/:tag/:name/:th")
 	.post(function(req, res) {
 		Clans.findOne({"tag": req.params.tag}, function(err, clan) {
-			console.log(clan.members);
+			// console.log(clan.members);
 			clan.member_requests.push(
-				{'name': req.params.name, 'date_request': new Date()}
+				{'name': req.params.name, 'th': req.params.th, 'date_request': new Date()}
 			);
 			clan.save(function(err, res) {
-				console.log(res);
+				// console.log(res);
 			});
 			res.send(clan);
 			Users.findOne({"user": req.params.name}, function(err, user) {
@@ -330,7 +331,7 @@ router.route("/joinYourClan/:tag/:name")
 		});
 	});
 
-router.route("/acceptMember/:name/:clan_tag/:clan_name")
+router.route("/acceptMember/:name/:clan_tag/:clan_name/:th")
 	.post(function(req, res) {
 		Users.findOne({"user": req.params.name}, function(err, user) {
 			user.clan_tag = req.params.clan_tag;
@@ -344,8 +345,9 @@ router.route("/acceptMember/:name/:clan_tag/:clan_name")
 			Clans.findOne({"tag": tag}, function(err, clan) {
 				console.log("ON MOVE LE MEMBER");
 				clan.members.push(
-					{"name": name, "role": 'member'}
+					{ "name": name, "th": req.params.th, "role": 'member', entered: new Date() }
 				);
+				console.log(clan.members);
 				clan.member_requests = _.without(clan.member_requests, _.findWhere(clan.member_requests, {name: name}));
 				clan.save(function(err, data) {
 					console.log("New member!");
@@ -387,13 +389,13 @@ router.route("/saveWarClan/:war/:clan_tag")
 		console.log(JSON.parse(req.params.war));
 		Clans.findOne({"tag": req.params.clan_tag}, function(err, clan) {
 			console.log("OOOOOOOOOOOOOOOOOOOOOO");
-			console.log(JSON.parse(req.params.war));
+			// console.log(JSON.parse(req.params.war));
 			clan.wars.push(
 				JSON.parse(req.params.war)
 			);
-			console.log(clan.wars);
+			// console.log(clan.wars);
 			clan.save(function(err, data) {
-				res.send(data);
+				res.send({data: 'yeah'});
 			});
 		});
 	});
@@ -402,7 +404,7 @@ router.route("/saveWarClan/:war/:clan_tag")
 router.route("/getClanWars/:clan_tag")
 	.get(function(req, res) {
 		Clans.findOne({"tag": req.params.clan_tag}, function(err, clan) {
-			console.log(clan);
+			// console.log(clan);
 			var wars = clan.wars;
 			res.send(wars);
 		});
@@ -413,7 +415,7 @@ router.route("/updateWar/:war/:clan_tag")
 	.post(function(req, res) {
 		Clans.findOne({"tag": req.params.clan_tag}, function(err, clan) {
 			var currentwar = JSON.parse(req.params.war);
-			console.log(currentwar);
+			// console.log(currentwar);
 
 			// Get destruction average
 			var destruction_average = 0;
@@ -463,12 +465,11 @@ router.route('/getWarById/:war_id/:clan_tag')
 -		Clans.findOne({"tag": req.params.clan_tag}, function(err, clan) {
 			_.each(clan.wars, function(war, index) {
 				var inwar = _.find(war, {id: req.params.war_id});
-				console.log(inwar);
+				// console.log(inwar);
 				if (inwar) {
 					res.send(inwar);
 				}
 			});
-			res.send({'data': 'nothing'});
 			
 		});
 	});
